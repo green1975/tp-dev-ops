@@ -30,6 +30,8 @@ jobs:
          run: npm run ci:e2e:prepare:docker
        - name: Lance test e2e
          run: npm run ci:e2e:run
+         env: 
+          JHI_E2E_HEADLESS: true
        - name: Stop docker et nettoie tout
          run: npm run ci:e2e:teardown
        
