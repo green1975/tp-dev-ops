@@ -20,3 +20,5 @@ jobs:
              java-version: '11.x'
        - name: Install node.js packages
          run: npm install
+       - name: Install test ci
+         run: npm run ci:frontend:test
