@@ -9,7 +9,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  build test:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -38,4 +38,14 @@ jobs:
           JHI_E2E_HEADLESS: true
        - name: Stop docker et nettoie tout
          run: npm run ci:e2e:teardown
+  build deploy:
+    # The type of runner that the job will run on
+      runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+      steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: deploy on heroku
+      - run: ./mvnw -ntp com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=tpjhipster
        
