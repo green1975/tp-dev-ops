@@ -24,4 +24,12 @@ jobs:
          run: npm run ci:frontend:test
        - name: test backend
          run: chmod +x mvnw && npm run ci:backend:test
+       - name: Test Integration
+         run: ./mvnw -ntp verify -DskipTests --batch-mode "-Pprod" "-Pe2e" "-Denforcer.skip=true"*
+       - name: Prepare docker
+         run: npm run ci:e2e:prepare:docker
+       - name: Lance test e2e
+         run: npm run ci:e2e:run
+       - name: Stop docker et nettoie tout
+         run: npm run ci:e2e:teardown
        
