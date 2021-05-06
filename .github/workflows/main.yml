@@ -48,4 +48,5 @@ jobs:
       - uses: actions/checkout@v2
       - name: deploy on heroku
       - run: ./mvnw -ntp com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=tpjhipster
-       
+        env:
+         HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
