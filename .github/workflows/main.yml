@@ -38,6 +38,11 @@ jobs:
           JHI_E2E_HEADLESS: true
        - name: Stop docker et nettoie tout
          run: npm run ci:e2e:teardown
+       - name: SonarTest
+         uses: sonarsource/sonarcloud-github-action@master
+         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   deploy:
       needs: test
     # The type of runner that the job will run on
