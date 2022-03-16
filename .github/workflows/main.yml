@@ -32,6 +32,15 @@ jobs:
          run: ./mvnw -ntp verify -DskipTests --batch-mode "-Pprod" "-Pe2e" "-Denforcer.skip=true"*
        - name: Prepare docker
          run: npm run ci:e2e:prepare:docker
+       - name: Lance test e2e
+         run: npm run ci:e2e:run
+         env: 
+          JHI_E2E_HEADLESS: true
+       - name: Logs test e2e
+         uses: actions/upload-artifact@v3
+         with:
+             name: logs test e2e
+             path: output/test/test e2e
        - name: Stop docker et nettoie tout
          run: npm run ci:e2e:teardown
        - name: SonarTest
