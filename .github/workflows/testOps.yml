@@ -42,11 +42,6 @@ jobs:
         run: ./mvnw -ntp verify -DskipTests --batch-mode "-Pprod" "-Pe2e" "-Denforcer.skip=true"
       - name: Create BDD
         run: npm run ci:e2e:prepare:docker
-      - uses: nanasess/setup-chromedriver@v1
-      - run: |
-          export DISPLAY=:99
-          chromedriver --url-base=/wd/hub &
-          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
       - name: Launch test
         run: npm run ci:e2e:run
       - name: Delete docker
