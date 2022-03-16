@@ -6890,6 +6890,11 @@
     "tough-cookie" "^3.0.1"
     "uuid" "^3.3.2"
 
+"install-chrome-dependencies@^1.1.2":
+  "integrity" "sha512-fPwOo7IA/kDzF3nBl9r2qTztvKjw8A9TMFXfudwJFcTu5loLqKslPLgn9vz9G8j15M7rKJJAOGi/zMogC6VlEw=="
+  "resolved" "https://registry.npmjs.org/install-chrome-dependencies/-/install-chrome-dependencies-1.1.2.tgz"
+  "version" "1.1.2"
+
 "internal-ip@^4.3.0":
   "integrity" "sha512-S1zBo1D6zcsyuC6PMmY5+55YMILQ9av8lotMx447Bq6SAgo/sDK6y6uUKmuYhW7eacnIhFfsPmCNYdDzsnnDCg=="
   "resolved" "https://registry.npmjs.org/internal-ip/-/internal-ip-4.3.0.tgz"
