@@ -13,14 +13,7 @@ exports.config = {
     chromeOptions: {
       args: process.env.JHI_E2E_HEADLESS
         ? ['--disable-gpu', '--window-size=800,600', '--no-sandbox', '--disable-dev-shm-usage']
-        : [
-            '--headless',
-            '--disable-gpu',
-            '--window-size=800,600',
-            '--no-sandbox',
-            '--disable-dev-shm-usage',
-            '--remote-debugging-port=9222',
-          ],
+        : ['--headless', '--disable-gpu', '--window-size=800,600', '--no-sandbox', '--disable-dev-shm-usage', '--troubleshoot'],
     },
   },
 
