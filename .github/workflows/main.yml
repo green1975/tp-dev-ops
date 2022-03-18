@@ -38,7 +38,7 @@ jobs:
          uses: actions/upload-artifact@v3
          with:
           name: Logs
-          path: file.txt
+          path: /home/runner/.npm/_logs/*.*
        - name: Lance test e2e
          run: npm run ci:e2e:run
          env: 
