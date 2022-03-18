@@ -3790,10 +3790,10 @@
   "resolved" "https://registry.npmjs.org/chrome-trace-event/-/chrome-trace-event-1.0.3.tgz"
   "version" "1.0.3"
 
-"chromedriver@^98.0.0":
-  "integrity" "sha512-/04KkHHE/K/lfwdPTQr5fxi1dWvM83p8T/IkYbyGK2PBlH7K49Dd71A9jrS+aWgXlZYkuHhbwiy2PA2QqZ5qQw=="
-  "resolved" "https://registry.npmjs.org/chromedriver/-/chromedriver-98.0.1.tgz"
-  "version" "98.0.1"
+"chromedriver@^99.0.0":
+  "integrity" "sha512-pyB+5LuyZdb7EBPL3i5D5yucZUD+SlkdiUtmpjaEnLd9zAXp+SvD/hP5xF4l/ZmWvUo/1ZLxAI1YBdhazGTpgA=="
+  "resolved" "https://registry.npmjs.org/chromedriver/-/chromedriver-99.0.0.tgz"
+  "version" "99.0.0"
   dependencies:
     "@testim/chrome-version" "^1.1.2"
     "axios" "^0.24.0"
