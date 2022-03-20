@@ -1,48 +1,61 @@
 # This is a basic workflow to help you get started with Actions
 
-name: OPS
-
-# Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the main branch
+name: CI
+on: 
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
+   branches:
+    - main
+    - develop
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  test:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+       - uses: browser-actions/setup-chrome@latest
+       - run: chrome --version
+       - uses: actions/checkout@v2
+       - uses: actions/setup-node@v1
+         with:
+             node-version: 14.16.1
+       - uses: actions/setup-java@v1
+         with:
+             java-version: '11.x'
+       - name: Install node.js packages
+         run: npm install
+       - name: Install test ci
+         run: npm run ci:frontend:test
+       - name: test backend
+         run: chmod +x mvnw && npm run ci:backend:test
+       - name: Test Integration
+         run: ./mvnw -ntp verify -DskipTests --batch-mode "-Pprod" "-Pe2e" "-Denforcer.skip=true"*
+       - name: Prepare docker
+         run: npm run ci:e2e:prepare:docker
+       - name: Archive code coverage results
+         uses: actions/upload-artifact@v3
+         with:
+          name: Logs
+          path: /home/runner/.npm/_logs/*.*
+       - name: Stop docker et nettoie tout
+         run: npm run ci:e2e:teardown
+       - name: SonarTest
+         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=green1975_tp-dev-ops
+  deploy:
+      needs: test
+    # The type of runner that the job will run on
+      runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+      steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      # Runs a single command using the runners shell
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14.16.1
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '11.x'
-      - name: Install node.js packages
-        run: npm install
-      - name: Launch test unitaire front 
-        run: npm run ci:frontend:test
-      - name: Launch test back
-        run: chmod +x mvnw && npm run ci:backend:test
-      - name: Create Jar file
-        run: ./mvnw -ntp verify -DskipTests --batch-mode "-Pprod" "-Pe2e" "-Denforcer.skip=true"
-      - name: Create BDD
-        run: npm run ci:e2e:prepare:docker
-      - name: Launch test
-        run: npm run ci:e2e:run
-      - name: Delete docker
-        run: npm run ci:e2e:teardown
+      - name: deploy on heroku
+        run: ./mvnw -ntp com.heroku.sdk:heroku-maven-plugin:2.0.5:deploy -DskipTests -Pprod -Dheroku.buildpacks=heroku/jvm -Dheroku.appName=tpjhipster
+        env:
+         HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
